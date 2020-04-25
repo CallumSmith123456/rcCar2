@@ -1,0 +1,16 @@
+{
+  "name": "version-2",
+  "version": "1.0.0",
+  "description": "Version 2 of my personal project website",
+  "main": "app.js",
+  "scripts": {
+    "test": "node app.js"
+  },
+  "author": "Callum Smith",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1",
+    "serialport": "^8.0.7",
+    "socket.io": "^2.3.0"
+  }
+}
