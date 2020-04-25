@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <link rel="stylesheet" href="style.css">
+
+
+
+   <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+    crossorigin="anonymous"></script>
+      <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>  <script src="client.js"></script>
+  <title>RC car</title>
+</head>
+
+<body>
+
+  <!-- Slider -->
+  <div class="slidecontainer">
+    <input type="range" min="1" max="255" value="1" class="slider" id="slider">
+  </div>
+
+
+
+  <div class="button">
+    <button onclick="forward()">Forward</button>
+    <button onclick="forwardLeft()">Forward Left</button>
+    <button onclick="left()">Left</button>
+    <button onclick="backLeft()">Back Left</button>
+    <button onclick="back()">Back</button>
+    <button onclick="backRight()">Back Right</button>
+    <button onclick="right()">Right</button>
+    <button onclick="rightForward()">Right Forward</button>
+
+  </div>
+
+
+  <script>
+    var socket; 
+    socket = io.connect('http://192.168.86.99:3000');
+    var pwm;
+
+    document.getElementById('slider').oninput = function () {
+      pwm = this.value;
+      send();
+    }
+
+    var dir;
+
+    function forward() {
+      dir = 1;
+      send();
+    }
+
+    function forwardLeft() {
+      dir = 2;
+      send();
+    }
+
+    function left() {
+      dir = 3;
+      send();
+    }
+
+    function backLeft() {
+      dir = 4;
+      send();
+    }
+
+    function back() {
+      dir = 5;
+      send();
+    }
+
+    function backRight() {
+      dir = 6;
+      send();
+    }
+
+    function right() {
+      dir = 7;
+      send();
+
+    }
+
+    function rightForward() {
+      dir = 8;
+      send();
+    }
+
+    function send() {
+
+      var data = {
+        pwm: pwm,
+        dir: dir
+      };
+      console.log(data);
+      socket.emit('status', data);
+
+
+    }
+
+
+  </script>
+ 
+
+
+</body>
+
+</html>
